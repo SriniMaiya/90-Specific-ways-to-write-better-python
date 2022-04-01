@@ -1,7 +1,6 @@
 # Chapter 1
 
 ## Item 1: Pythonic Thinking
-----
 
 - Check python version:
 1. Via command line:
@@ -16,7 +15,7 @@
 ```
 
 ## Item 2: PEP 8 - Style Guide for Python Code
-----
+
 
 1. Whitespace:
    - Use 4 spaces for indentation.
@@ -58,7 +57,6 @@
    - Avoid using `from module import *`.
 
 ## Item 3: bytes and str character sequence
-----
 
 1. Byte strings:
     - Use `bytes` for binary data. Contains raw, unsigned 8-bit values.
@@ -131,7 +129,6 @@
 
 
 ## Item 4: F-Strings over C-style string and `str.format()`
-----
 
 Instead of using C-style string and `str.format()`, use inbuilt- robust f strings to avoid type conversion incompatibilities and other issues that might occur. 
 
@@ -158,7 +155,7 @@ More documentation can be found at [here](https://docs.python.org/3/reference/le
 
 
 ## Item 5: Helper functions instead of single complex functions
-----
+
 - The example below reads the red, green, blue and alpha values from a dictionary and returns zero, if the values in the dictionary are missing.
   
 1. Without healper function:

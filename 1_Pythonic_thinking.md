@@ -62,16 +62,19 @@
     - Use `bytes` for binary data. Contains raw, unsigned 8-bit values.
             
     ```python
-    >>> a = b'h\x65llo'
-    >>> print(a)
+    a = b'h\x65llo'
+    print(a)
+    >>>
     b'hello'
         
-    >>> print(list(a))
+    print(list(a))
+    >>> 
     [104, 101, 108, 108, 111]
 
     # Convert byte to string
-    >>> string = a.decode('utf-8')
-    >>> print(string)
+    string = a.decode('utf-8')
+    print(string)
+    >>> 
     'hello'
     ```
     - To read a binary file:
@@ -87,34 +90,40 @@
     - Instances of strings contain Unicode characters.
             
     ```python
-    >>> a = 'hello'
-    >>> print(a)
+    a = 'hello'
+    print(a)
+    >>> 
     'hello'
         
-    >>> print(list(a))
+    print(list(a))
+    >>> 
     ['h', 'e', 'l', 'l', 'o']
     ```
 
 - String concatenation and comparision  is possible with same type of strings. i.e. bytes with bytes, and str with str.
   
     ```python
-    >>> a = b'hello'    # bytes
-    >>> b = 'world'     # str
-    >>> print(a + b)
+    a = b'hello'    # bytes
+    b = 'world'     # str
+    print(a + b)
+    >>> 
     b'helloworld'
 
-    >>> print(a + b.encode('utf-8'))
+    print(a + b.encode('utf-8'))
+    >>> 
     b'helloworld'
 
     # Addition of bytes with strings
-    >>> print(a + b)
+    print(a + b)
+    >>> 
     Traceback (most recent call last):
     File "<stdin>", line 1, in <module>
     TypeError: can't concat str to bytes
     ```
     ```python
     # Convert bytes to str and add
-    >>> print(a.decode('utf-8') + b)
+    print(a.decode('utf-8') + b)
+    >>> 
     helloworld
     ```
 
@@ -136,9 +145,9 @@ Instead of using C-style string and `str.format()`, use inbuilt- robust f string
 ```python
 shopping_list = [("milk", 0.77), ("eggs", 2.10), ("cheese", 2.8), ("bread", 1.30), ("butter", 1.8)]
 
->>> for i, (item, price) in enumerate(shopping_list):
-        print(f"{i+1:<3}. {item:<10} -  € {price:.2f}")
-
+for i, (item, price) in enumerate(shopping_list):
+    print(f"{i+1:<3}. {item:<10} -  € {price:.2f}")
+>>> 
 1   milk       - €0.77
 2   eggs       - €2.10
 3   cheese     - €2.80
@@ -161,55 +170,151 @@ More documentation can be found at [here](https://docs.python.org/3/reference/le
 1. Without healper function:
 
 ```python
->>> incomplete_dict = {"red": ['220'], "green": [''], "blue": ['240'], "alpha" :['']}
+incomplete_dict = {"red": ['220'], "green": [''], "blue": ['240'], "alpha" :['']}
 
->>> red = incomplete_dict.get("red", [''])[0] or 0
->>> red = int(red)
->>> green = incomplete_dict.get("green", [''])[0] or 0
->>> green = int(green)
->>> blue = incomplete_dict.get("blue", [''])[0] or 0
->>> blue = int(blue)
->>> alpha = incomplete_dict.get("alpha", [''])[0] or 0
->>> alpha = int(alpha)
+red = incomplete_dict.get("red", [''])[0] or 0
+red = int(red)
+green = incomplete_dict.get("green", [''])[0] or 0
+green = int(green)
+blue = incomplete_dict.get("blue", [''])[0] or 0
+blue = int(blue)
+alpha = incomplete_dict.get("alpha", [''])[0] or 0
+alpha = int(alpha)
 
 
->>> print(f"red: {red}")
+print(f"red: {red}")
+>>> 
 red: 220
->>> print(f"green: {green}")
+
+print(f"green: {green}")
+>>> 
 green: 0
->>> print(f"blue: {blue}")
+
+print(f"blue: {blue}")
+>>> 
 blue: 240
->>> print(f"alpha: {alpha}")
+
+print(f"alpha: {alpha}")
+>>> 
 alpha: 0
 ```
 
 2. With helper function:
 
 ```python
->>> incomplete_dict = {"red": ['220'], "green": [''], "blue": ['240'], "alpha" :['']}
+incomplete_dict = {"red": ['220'], "green": [''], "blue": ['240'], "alpha" :['']}
 
->>> def get_color_value(color_name, color_dict, default = 0):
-        value = color_dict.get(color_name, [''])
-        if value[0]:
-            return int(value[0])
-        return default
+def get_color_value(color_name, color_dict, default = 0):
+    value = color_dict.get(color_name, [''])
+    if value[0]:
+        return int(value[0])
+    return default
     
 
->>> red = get_color_value("red", incomplete_dict)
->>> green = get_color_value("green", incomplete_dict)
->>> blue = get_color_value("blue", incomplete_dict)
->>> alpha = get_color_value("alpha", incomplete_dict)
+red = get_color_value("red", incomplete_dict)
+green = get_color_value("green", incomplete_dict)
+blue = get_color_value("blue", incomplete_dict)
+alpha = get_color_value("alpha", incomplete_dict)
 
->>>  print(f"red: {red}")
+print(f"red: {red}")
+>>> 
 red: 220
->>> print(f"green: {green}")
+
+print(f"green: {green}")
+>>> 
 green: 0
->>> print(f"blue: {blue}")
+
+print(f"blue: {blue}")
+>>> 
 blue: 240
->>> print(f"alpha: {alpha}")
+
+print(f"alpha: {alpha}")
+>>> 
 alpha: 0
 ```
 - Helper functions are advised to be used when the same process is carried out multiple times. Also helps to find bugs in the program, as the author has to focus on a function rather than searching all the variables.
+
+
+## Item 6: Multiple assignment unpacking over indexing.
+1. Indexing ( With no unpacking):
+```python
+
+colors = [("red", (255,0,0)), ("green", (0,255,0)), ("blue", (0,0,255))]
+
+for i in range(len(colors)):
+    color = colors[i]
+    color_name = color[0]
+    color_value = color[1]
+    print(f"No. {i:<2}{color_name:^10}: {str(value):<15}")
+
+>>> 
+No. 0    red    : (255, 0, 0)    
+No. 1  green    : (0, 255, 0)    
+No. 2   blue    : (0, 0, 255) 
+```
+2. With unpacking:
+```python
+colors = [("red", (255,0,0)), ("green", (0,255,0)), ("blue", (0,0,255))]
+for rank, (color_name, value) in enumerate(colors, 1) :
+    print(f"No. {rank:<2}{color_name:^10}: {str(value):<15}")
+
+>>>
+No. 0    red    : (255, 0, 0)    
+No. 1  green   : (0, 255, 0)    
+No. 2   blue   : (0, 0, 255)
+```
+- Reduce visual noise and increase code clarity by using unpacking to avoid explicitly indexing into sequences.
+  
+## Item 7: `enumerate()` over `range()`
+
+1. `range()` returns an iterator, which can be used to iterate over a set of integers.
+  
+```python
+from random import randint
+randombits = 0
+for i in range(10):
+    if randint(0, 1):
+        randombits |= 1 << i    
+print(bin(randombits))
+
+>>>
+0b10101010101
+```
+2. direct iteration:
+```python
+data = ["Python", "C++", "Rust", "C#"]
+for language in data:
+    print(f"It's good to learn {language}")
+
+>>>
+Its good to learn Python
+Its good to learn C++
+Its good to learn Rust
+Its good to learn C#
+```
+
+3. `enumerate()` returns an iterator, which can be used to iterate over a set of a complex datastructure and also return the index of the integer. Enumerate can iterate a datastructure on multiple levels.  
+3.1 Enumerate at level 0:
+```python
+nested_list = [["Python", "high-level language"], ["C++", "low-level language"], ["Rust", "high-level language"]]
+
+for i, language in enumerate(nested_list):
+    name = language[0]
+    level = language[1]
+    print(f"{i+1}. {name} is a {level}")
+```
+3.2 Enumerate at level 1:
+
+```python
+for i, [name, level] in enumerate(nested_list):
+    print(f"{i+1}. {name} is a {level}")
+```
+- Both the above examples are equivalent, but the level of iteration is different.
+- Both produce the same output, 
+- 
+        1. Python is a high-level language
+        2. C++ is a low-level language
+        3. Rust is a high-level language
 
 
 

@@ -14,7 +14,7 @@
     print(sys.version)
 ```
 
-### Item 2: PEP 8 - Style Guide for Python Code:
+### Item 2: PEP 8 - Style Guide for Python Code
 
 1. Whitespace:
    - Use 4 spaces for indentation.
@@ -36,6 +36,80 @@
   
 3. Expressions and Statements:
    - Use inline negations, i.e  `if a is not b` instead of `if not a is b`.
-   - Don't check for empty containers using `len()`, use `if a:` instead. 
+   - Don't check for empty containers using `len()`, use `if a:` instead. i.e.
+        - instead of `if len(a) == 0:`, use `if not a`.
+        - instead of `if len(a) != 0:`, use `if a`.
+   - Use `is` instead of `==` for comparing objects.
+        -  i.e instead of `if a == b`, use `if a is b`.
+   - Avoid inline statements when not necessary.
+   - Surround multiline statements with parantheses `()` instead of the `\` line continuation character.
+    - Use `pass` as a placeholder for empty statements.
   
-        i.e instead of `if len(a) == 0:` use `if a:`.
+4. Imports:
+   - Imports must be at the top of the file.
+   - Always absolute imports are preferred. i.e. `from module import function`, instead of `import module.function`.
+   - If relative imports are must, then use `from .module import function`.
+   - Imports in order:
+       - Standard library imports.
+       - Third party imports.
+       - Local imports.
+   - Avoid using `from module import *`.
+  
+### Item 3: bytes and str character sequence
+
+1. Byte strings:
+    - Use `bytes` for binary data. Contains raw, unsigned 8-bit values.
+            
+    ```python
+    >>> a = b'h\x65llo'
+    >>> print(a)
+    b'hello'
+        
+    >>> print(list(a))
+    [104, 101, 108, 108, 111]
+
+    # Convert byte to string
+    >>> string = a.decode('utf-8')
+    >>> print(string)
+    'hello'
+    ```
+2. Strings:
+    - Use `str` for text data. Contains raw, Unicode characters.
+    - Instances of strings contain Unicode characters.
+            
+    ```python
+    >>> a = 'hello'
+    >>> print(a)
+    'hello'
+        
+    >>> print(list(a))
+    ['h', 'e', 'l', 'l', 'o']
+    ```
+
+- String concatenation and comparision  is possible with same type of strings. i.e. bytes with bytes, and str with str.
+  
+    ```python
+    >>> a = b'hello'    # bytes
+    >>> b = 'world'     # str
+    >>> print(a + b)
+    b'helloworld'
+
+    >>> print(a + b.encode('utf-8'))
+    b'helloworld'
+
+    # Addition of bytes with strings
+    >>> print(a + b)
+    Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+    TypeError: can't concat str to bytes
+    ```
+    ```python
+    # Convert bytes to str and add
+    >>> print(a.decode('utf-8') + b)
+    helloworld
+    ```
+
+
+
+
+    

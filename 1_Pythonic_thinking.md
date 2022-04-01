@@ -1,6 +1,7 @@
-## Chapter 1
+# Chapter 1
 
-### Item 1: Pythonic Thinking
+## Item 1: Pythonic Thinking
+----
 
 - Check python version:
 1. Via command line:
@@ -14,7 +15,8 @@
     print(sys.version)
 ```
 
-### Item 2: PEP 8 - Style Guide for Python Code
+## Item 2: PEP 8 - Style Guide for Python Code
+----
 
 1. Whitespace:
    - Use 4 spaces for indentation.
@@ -54,8 +56,9 @@
        - Third party imports.
        - Local imports.
    - Avoid using `from module import *`.
-  
-### Item 3: bytes and str character sequence
+
+## Item 3: bytes and str character sequence
+----
 
 1. Byte strings:
     - Use `bytes` for binary data. Contains raw, unsigned 8-bit values.
@@ -72,6 +75,14 @@
     >>> string = a.decode('utf-8')
     >>> print(string)
     'hello'
+    ```
+    - To read a binary file:
+        - Use `open(filename, 'rb')`
+        - Use `read()` to read the entire file.
+        - Use `close()` to close the file.
+    ```python
+    with open('test.bin', 'wb') as f:
+        f.write(b'hello')
     ```
 2. Strings:
     - Use `str` for text data. Contains raw, Unicode characters.
@@ -109,7 +120,99 @@
     helloworld
     ```
 
+    - To read a text file:
+        - Use `open(filename, 'r')`
+        - Use `read()` to read the entire file.
+        - Use `close()` to close the file.
+    ```python
+    with open('test.txt', 'r') as f:
+        print(f.read())
+    ```
 
 
+## Item 4: F-Strings over C-style string and `str.format()`
+----
 
+Instead of using C-style string and `str.format()`, use inbuilt- robust f strings to avoid type conversion incompatibilities and other issues that might occur. 
+
+
+```python
+shopping_list = [("milk", 0.77), ("eggs", 2.10), ("cheese", 2.8), ("bread", 1.30), ("butter", 1.8)]
+
+>>> for i, (item, price) in enumerate(shopping_list):
+        print(f"{i+1:<3}. {item:<10} -  € {price:.2f}")
+
+1   milk       - €0.77
+2   eggs       - €2.10
+3   cheese     - €2.80
+4   bread      - €1.20
+5   butter     - €1.80
+```
+
+- f-strings are able to use `{var_name}` instead of `%` for formatting.
+    - Use `{var_name:<width}` to left align the variable.
+    - Use `{var_name:>width}` to right align the variable.
+    - Use `{var_name:^width}` to center the variable.
+
+More documentation can be found at [here](https://docs.python.org/3/reference/lexical_analysis.html#f-strings) and [here](https://docs.python.org/2/library/string.html#formatspec).
+
+
+## Item 5: Helper functions instead of single complex functions
+----
+- The example below reads the red, green, blue and alpha values from a dictionary and returns zero, if the values in the dictionary are missing.
+  
+1. Without healper function:
+
+```python
+>>> incomplete_dict = {"red": ['220'], "green": [''], "blue": ['240'], "alpha" :['']}
+
+>>> red = incomplete_dict.get("red", [''])[0] or 0
+>>> red = int(red)
+>>> green = incomplete_dict.get("green", [''])[0] or 0
+>>> green = int(green)
+>>> blue = incomplete_dict.get("blue", [''])[0] or 0
+>>> blue = int(blue)
+>>> alpha = incomplete_dict.get("alpha", [''])[0] or 0
+>>> alpha = int(alpha)
+
+
+>>> print(f"red: {red}")
+red: 220
+>>> print(f"green: {green}")
+green: 0
+>>> print(f"blue: {blue}")
+blue: 240
+>>> print(f"alpha: {alpha}")
+alpha: 0
+```
+
+2. With helper function:
+
+```python
+>>> incomplete_dict = {"red": ['220'], "green": [''], "blue": ['240'], "alpha" :['']}
+
+>>> def get_color_value(color_name, color_dict, default = 0):
+        value = color_dict.get(color_name, [''])
+        if value[0]:
+            return int(value[0])
+        return default
     
+
+>>> red = get_color_value("red", incomplete_dict)
+>>> green = get_color_value("green", incomplete_dict)
+>>> blue = get_color_value("blue", incomplete_dict)
+>>> alpha = get_color_value("alpha", incomplete_dict)
+
+>>>  print(f"red: {red}")
+red: 220
+>>> print(f"green: {green}")
+green: 0
+>>> print(f"blue: {blue}")
+blue: 240
+>>> print(f"alpha: {alpha}")
+alpha: 0
+```
+- Helper functions are advised to be used when the same process is carried out multiple times. Also helps to find bugs in the program, as the author has to focus on a function rather than searching all the variables.
+
+
+

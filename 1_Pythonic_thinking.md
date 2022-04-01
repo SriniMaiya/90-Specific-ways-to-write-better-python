@@ -323,7 +323,7 @@ for i, [name, level] in enumerate(nested_list, start=1):
 - Enumereate provides concise syntax to loop over an iterator and getting the index of each item from the iterator.
 - Prefer `enumerate()` instead of looping over a range and indexing into a sequence.
 
-## Item 8: `zip()` to process iterator in parallel
+## Item 8: `zip()` to process iterators in parallel
 - Process two iterators at the same time.
 - If the iterators are of different lengths, the longer iterator will be truncated.
 
@@ -355,5 +355,25 @@ Results in:
     3. Rust is a high-level language
     4. C# is a high-level language
 
+
+## -> Avoid the truncation of longer iterator while zip using `itertools.zip_longest()`
+The shorter iterator will be extended with `None` values.
+
+```python
+from itertools import zip_longest
+a = [1, 2, 3]
+b = [4, 5, 6, 7]
+
+for i, j in zip_longest(a, b):
+    print(f"{i} {j}")
+```
+Results in:
+
+        1 4
+        2 5
+        3 6
+        None 7
+    
+## Item 9: Avoid `else()` after `for()` and `while()` loops
 
 

@@ -293,28 +293,67 @@ Its good to learn Rust
 Its good to learn C#
 ```
 
-3. `enumerate()` returns an iterator, which can be used to iterate over a set of a complex datastructure and also return the index of the integer. Enumerate can iterate a datastructure on multiple levels.  
-3.1 Enumerate at level 0:
+3. `enumerate()` returns an iterator, which can be used to iterate over a set of a complex datastructure and also return the index of the integer.
+-  The `start` parameter can be used to start the indexing from a particular number.
+
+- Using `start = 0`  
 ```python
 nested_list = [["Python", "high-level language"], ["C++", "low-level language"], ["Rust", "high-level language"]]
 
-for i, language in enumerate(nested_list):
+for i, language in enumerate(nested_list, start = 0):
     name = language[0]
     level = language[1]
     print(f"{i+1}. {name} is a {level}")
 ```
-3.2 Enumerate at level 1:
+
+- Using `start = 1`  
 
 ```python
-for i, [name, level] in enumerate(nested_list):
-    print(f"{i+1}. {name} is a {level}")
+for i, [name, level] in enumerate(nested_list, start=1):
+    print(f"{i}. {name} is a {level}")
 ```
 - Both the above examples are equivalent, but the level of iteration is different.
 - Both produce the same output, 
-- 
+   
         1. Python is a high-level language
         2. C++ is a low-level language
         3. Rust is a high-level language
+
+
+- Enumereate provides concise syntax to loop over an iterator and getting the index of each item from the iterator.
+- Prefer `enumerate()` instead of looping over a range and indexing into a sequence.
+
+## Item 8: `zip()` to process iterator in parallel
+- Process two iterators at the same time.
+- If the iterators are of different lengths, the longer iterator will be truncated.
+
+```python
+names = ["Python", "C++", "Rust", "C#"]
+levels = ["high-level language", "low-level language", "high-level language", "high-level language"]
+
+for name, level in zip(names, levels):
+    print(f"{name} is a {level}")
+ 
+```
+Results in:
+
+    Python is a high-level language
+    C++ is a low-level language
+    Rust is a high-level language
+    C# is a high-level language
+
+- To also obtain the index, use `enumerate()` on `zip()`
+
+```python
+for i, (name, level) in enumerate(zip(names, levels), start=1):
+    print(f"{i}. {name} is a {level}")
+```
+Results in:
+    
+    1. Python is a high-level language
+    2. C++ is a low-level language
+    3. Rust is a high-level language
+    4. C# is a high-level language
 
 
 

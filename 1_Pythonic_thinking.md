@@ -37,4 +37,5 @@
 3. Expressions and Statements:
    - Use inline negations, i.e  `if a is not b` instead of `if not a is b`.
    - Don't check for empty containers using `len()`, use `if a:` instead. 
+  
         i.e instead of `if len(a) == 0:` use `if a:`.

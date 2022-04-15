@@ -375,5 +375,51 @@ Results in:
         None 7
     
 ## Item 9: Avoid `else()` after `for()` and `while()` loops
+Eventhough python allows you to use `else()` after `for()` and `while()` loops, it is not recommended.
+
+```python
+for i in range(1, 4):
+    if i and i % 2 == 0:
+        print(f"{i} is even")
+    else:
+        print(f"{i} is odd")
+else:
+    print("Executes if no exceptions in the loop")
+```
+Results in:
+    
+    1 is odd
+    2 is even
+    3 is odd
+    Executes if no exceptions in the loop
+- The else block executes when there is no exceptions encountered i.e. the `while()` or `for()` loop has exited normally.
+* As this information can be misleading, it is advised to use `else()` only after `if()` and `elif()` statements.
+
+
+## Item 10: Avoid repition with assignment expressions
+
+
+```python
+fruits = {"apple": 5, "banana": 20, "lemon": 4}
+
+lemons = fruits.get("lemon", 0)
+if lemons:
+    print(f"You can make {lemons} glasses of lemonade")
+else:
+    print("You have no lemons, can't make lemonade")
+```
+
+
+- With the help of assignment expression (also known as walrus operator), the above code can be written as:
+
+```python
+fruits = {"apple": 5, "banana": 20, "lemon": 4}
+
+if lemons:= fruits.get("lemon", 0):
+    print(f"You can make {lemons} glasses of lemonade")
+else:
+    print("You have no lemons, can't make lemonade")
+```
+- Eventhough walrus operator reduces the code by one line, the code is much readable.
 
 
